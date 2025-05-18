@@ -1,0 +1,992 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Home Nexus - Premium Stays in Kolkata</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Reset & Base Styles */
+        :root {
+            --primary: #2d3436;
+            --secondary: #0984e3;
+            --accent: #e17055;
+            --light: #ffffff;
+            --dark: #2d3436;
+            --gray: #b2bec3;
+            --bg-light: #f9f9f9;
+            --transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            --shadow-sm: 0 4px 6px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.1);
+            --shadow-md: 0 10px 15px rgba(0, 0, 0, 0.07), 0 5px 10px rgba(0, 0, 0, 0.05);
+            --shadow-lg: 0 20px 25px rgba(0, 0, 0, 0.1), 0 10px 10px rgba(0, 0, 0, 0.04);
+            --radius-sm: 8px;
+            --radius-md: 16px;
+            --radius-lg: 24px;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background-color: var(--bg-light);
+            overflow-x: hidden;
+        }
+        
+        h1, h2, h3, h4 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 600;
+            line-height: 1.3;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--secondary);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-md);
+            background-color: #0873c4;
+        }
+        
+        .section {
+            padding: 100px 0;
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: var(--dark);
+        }
+        
+        .section-subtitle {
+            font-size: 1.1rem;
+            color: var(--gray);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        /* Navbar */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: var(--shadow-sm);
+            padding: 15px 0;
+            transition: var(--transition);
+        }
+        
+        .navbar.scrolled {
+            padding: 10px 0;
+            box-shadow: var(--shadow-md);
+        }
+        
+        .navbar-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .navbar-logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: var(--dark);
+        }
+        
+        .logo-img {
+            width: 40px;
+            height: 40px;
+            background-color: var(--secondary);
+            border-radius: 50%;
+            margin-right: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 20px;
+        }
+        
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+        
+        .navbar-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .navbar-links li {
+            margin-left: 30px;
+        }
+        
+        .navbar-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            font-size: 1rem;
+            transition: var(--transition);
+            position: relative;
+        }
+        
+        .navbar-links a:after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--secondary);
+            transition: var(--transition);
+        }
+        
+        .navbar-links a:hover {
+            color: var(--secondary);
+        }
+        
+        .navbar-links a:hover:after {
+            width: 100%;
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--dark);
+        }
+        
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            background-color: var(--light);
+            overflow: hidden;
+            padding-top: 80px; /* Account for fixed navbar */
+        }
+        
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 55%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(9, 132, 227, 0.85) 0%, rgba(0, 206, 201, 0.85) 100%);
+            border-radius: 0 0 0 100px;
+            z-index: 1;
+            transform: translateX(100%);
+            animation: slideInBg 1s forwards 0.5s;
+        }
+        
+        .hero-container {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 100%;
+        }
+        
+        .hero-content {
+            width: 50%;
+            animation: fadeInUp 1s forwards;
+            opacity: 0;
+            transform: translateY(30px);
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 40px;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .hero-title {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            color: var(--dark);
+        }
+        
+        .hero-title span {
+            color: var(--secondary);
+        }
+        
+        .hero-subtitle {
+            font-size: 1.2rem;
+            color: var(--dark);
+            margin-bottom: 30px;
+        }
+        
+        .hero-image {
+            width: 45%;
+            position: relative;
+            opacity: 0;
+            transform: translateX(30px);
+            animation: fadeInRight 1s forwards 0.8s;
+        }
+        
+        .hero-image-circle {
+            width: 400px;
+            height: 400px;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            position: relative;
+            box-shadow: var(--shadow-lg);
+            overflow: hidden;
+            border: 5px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .hero-image-circle:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80') center/cover;
+            animation: zoomInOut 20s infinite alternate;
+        }
+        
+        .floating-card {
+            position: absolute;
+            background: white;
+            padding: 15px;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-md);
+            display: flex;
+            align-items: center;
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        .floating-card.card-1 {
+            bottom: 30px;
+            left: -30px;
+            animation-delay: 0.5s;
+        }
+        
+        .floating-card.card-2 {
+            top: 50px;
+            right: -20px;
+            animation-delay: 1s;
+        }
+        
+        .card-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(9, 132, 227, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+            color: var(--secondary);
+        }
+        
+        .card-text {
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        
+        .scroll-down {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: var(--dark);
+            font-size: 0.9rem;
+            opacity: 0;
+            animation: fadeIn 1s forwards 1.5s;
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 10px 15px;
+            border-radius: 30px;
+        }
+        
+        .scroll-down i {
+            font-size: 1.5rem;
+            margin-top: 5px;
+            animation: bounce 2s infinite;
+        }
+        
+        /* Properties Section */
+        .properties {
+            background-color: var(--light);
+            padding-bottom: 80px;
+        }
+        
+        .properties-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 30px;
+        }
+        
+        .property-embed-container {
+            width: 48%;
+            background: white;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            transition: var(--transition);
+        }
+        
+        .property-embed-container:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .property-header {
+            padding: 30px 30px 20px;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+        
+        .property-title {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+        
+        .property-location {
+            display: flex;
+            align-items: center;
+            color: var(--gray);
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+        
+        .property-location i {
+            margin-right: 5px;
+            color: var(--accent);
+        }
+        
+        .property-rating {
+            display: inline-block;
+            background-color: var(--accent);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .property-rating i {
+            margin-right: 3px;
+        }
+        
+        .property-embed {
+            padding: 20px;
+        }
+        
+        /* Features Section */
+        .features {
+            background-color: var(--bg-light);
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+        
+        .feature-card {
+            background: white;
+            border-radius: var(--radius-md);
+            padding: 30px;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .feature-card:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 0;
+            background: var(--secondary);
+            transition: var(--transition);
+        }
+        
+        .feature-card:hover:before {
+            height: 100%;
+        }
+        
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: rgba(9, 132, 227, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            color: var(--secondary);
+            font-size: 1.5rem;
+        }
+        
+        .feature-title {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+        
+        .feature-text {
+            color: var(--gray);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+        
+        /* Contact Section */
+        .contact {
+            background-color: white;
+        }
+        
+        .contact-card {
+            background: white;
+            border-radius: var(--radius-lg);
+            padding: 50px;
+            box-shadow: var(--shadow-md);
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .contact-title {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: var(--dark);
+        }
+        
+        .contact-text {
+            color: var(--gray);
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+        }
+        
+        .contact-info {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 30px;
+        }
+        
+        .contact-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(9, 132, 227, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+            color: var(--secondary);
+            font-size: 1.2rem;
+        }
+        
+        .contact-label {
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: var(--dark);
+        }
+        
+        .contact-value {
+            color: var(--secondary);
+        }
+        
+        /* Footer */
+        .footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 30px 0;
+            text-align: center;
+        }
+        
+        .footer-text {
+            opacity: 0.8;
+            font-size: 0.9rem;
+        }
+        
+        /* Animations */
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeInRight {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+        
+        @keyframes slideInBg {
+            to {
+                transform: translateX(0);
+            }
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0); }
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+        
+        @keyframes zoomInOut {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.2); }
+        }
+        
+        /* Responsive */
+        @media (max-width: 992px) {
+            .hero-title {
+                font-size: 2.8rem;
+            }
+            
+            .hero-image-circle {
+                width: 350px;
+                height: 350px;
+            }
+            
+            .property-embed-container {
+                width: 100%;
+                margin-bottom: 30px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .navbar-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: white;
+                flex-direction: column;
+                padding: 20px 0;
+                box-shadow: var(--shadow-md);
+            }
+            
+            .navbar-links.active {
+                display: flex;
+            }
+            
+            .navbar-links li {
+                margin: 10px 0;
+                text-align: center;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .hero {
+                height: auto;
+                min-height: 100vh;
+                padding: 100px 0 50px;
+            }
+            
+            .hero-bg {
+                width: 100%;
+                height: 50%;
+                top: auto;
+                bottom: 0;
+                border-radius: 100px 100px 0 0;
+            }
+            
+            .hero-container {
+                flex-direction: column;
+                justify-content: center;
+            }
+            
+            .hero-content {
+                width: 100%;
+                margin-bottom: 50px;
+                order: 1;
+                padding: 30px;
+            }
+            
+            .hero-image {
+                width: 100%;
+                display: flex;
+                justify-content: center;
+                order: 2;
+                margin-top: 30px;
+            }
+            
+            .hero-image-circle {
+                width: 280px;
+                height: 280px;
+            }
+            
+            .floating-card {
+                display: none;
+            }
+            
+            .scroll-down {
+                bottom: 20px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .section {
+                padding: 60px 0;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .hero-title {
+                font-size: 2rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+            
+            .hero-content {
+                padding: 25px;
+            }
+            
+            .hero-image-circle {
+                width: 220px;
+                height: 220px;
+            }
+            
+            .property-header {
+                padding: 20px;
+            }
+            
+            .property-title {
+                font-size: 1.5rem;
+            }
+            
+            .contact-card {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar" id="navbar">
+        <div class="container navbar-container">
+            <a href="#" class="navbar-logo">
+                <div class="logo-img">SN</div>
+                <div class="logo-text">Smart Home Nexus</div>
+            </a>
+            
+            <button class="mobile-menu-btn" id="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <ul class="navbar-links" id="navbar-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#properties">Properties</a></li>
+                <li><a href="#features">Why Choose Us</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+    
+    <!-- Hero Section -->
+    <section class="hero section" id="home">
+        <div class="hero-bg"></div>
+        <div class="container hero-container">
+            <div class="hero-content">
+                <h1 class="hero-title">Experience <span>Premium Living</span> in Kolkata</h1>
+                <p class="hero-subtitle">Discover our exquisitely designed tiny home and apartment that redefine modern luxury with thoughtful details and exceptional comfort.</p>
+                <a href="#properties" class="btn">Explore Our Properties</a>
+            </div>
+            
+            <div class="hero-image">
+                <div class="hero-image-circle"></div>
+                <div class="floating-card card-1">
+                    <div class="card-icon">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <div class="card-text">4.9+ Rated Properties</div>
+                </div>
+                <div class="floating-card card-2">
+                    <div class="card-icon">
+                        <i class="fas fa-home"></i>
+                    </div>
+                    <div class="card-text">Premium Accommodations</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="scroll-down">
+            <span>Scroll Down</span>
+            <i class="fas fa-chevron-down"></i>
+        </div>
+    </section>
+    
+    <!-- Properties Section -->
+    <section class="properties section" id="properties">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Our Premium Properties</h2>
+                <p class="section-subtitle">Each of our properties has been meticulously designed to offer the perfect blend of style, comfort, and convenience.</p>
+            </div>
+            
+            <div class="properties-container">
+                <div class="property-embed-container">
+                    <div class="property-header">
+                        <h3 class="property-title">Tiny Home Retreat</h3>
+                        <div class="property-location">
+                            <i class="fas fa-map-marker-alt"></i> Kolkata, India
+                        </div>
+                        <span class="property-rating">
+                            <i class="fas fa-star"></i> 4.95
+                        </span>
+                    </div>
+                    <div class="property-embed">
+                        <div class="airbnb-embed-frame" data-id="660799448901817264" data-view="home" data-hide-price="true" style="width: 100%; height: 300px;">
+                            <a href="https://www.airbnb.co.in/rooms/660799448901817264?guests=1&amp;adults=1&amp;s=66&amp;source=embed_widget">View on Airbnb</a>
+                            <a href="https://www.airbnb.co.in/rooms/660799448901817264?guests=1&amp;adults=1&amp;s=66&amp;source=embed_widget" rel="nofollow">Tiny home in Kolkata · ★4.95 · 1 bedroom · 2 beds · 1 bathroom</a>
+                            <script async="" src="https://www.airbnb.co.in/embeddable/airbnb_jssdk"></script>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="property-embed-container">
+                    <div class="property-header">
+                        <h3 class="property-title">Urban Apartment</h3>
+                        <div class="property-location">
+                            <i class="fas fa-map-marker-alt"></i> Kolkata, India
+                        </div>
+                        <span class="property-rating">
+                            <i class="fas fa-star"></i> 4.86
+                        </span>
+                    </div>
+                    <div class="property-embed">
+                        <div class="airbnb-embed-frame" data-id="1145673658372915289" data-view="home" data-hide-price="true" style="width: 100%; height: 300px;">
+                            <a href="https://www.airbnb.co.in/rooms/1145673658372915289?guests=1&amp;adults=1&amp;s=66&amp;source=embed_widget">View on Airbnb</a>
+                            <a href="https://www.airbnb.co.in/rooms/1145673658372915289?guests=1&amp;adults=1&amp;s=66&amp;source=embed_widget" rel="nofollow">Apartment in Kolkata · ★4.86 · 1 bedroom · 2 beds · 1 bathroom</a>
+                            <script async="" src="https://www.airbnb.co.in/embeddable/airbnb_jssdk"></script>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Features Section -->
+    <section class="features section" id="features">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Why Choose Smart Home Nexus</h2>
+                <p class="section-subtitle">We pride ourselves on creating exceptional living experiences that exceed expectations.</p>
+            </div>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-gem"></i>
+                    </div>
+                    <h3 class="feature-title">Exceptional Design</h3>
+                    <p class="feature-text">Our properties feature clean lines, thoughtful layouts, and premium materials that create a sense of luxury without excess.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-leaf"></i>
+                    </div>
+                    <h3 class="feature-title">Sustainability Focus</h3>
+                    <p class="feature-text">Both our tiny home and apartment incorporate eco-friendly elements, from energy-efficient appliances to sustainable materials.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-map-marked-alt"></i>
+                    </div>
+                    <h3 class="feature-title">Perfect Locations</h3>
+                    <p class="feature-text">Strategically positioned in Kolkata to offer convenience and access to local attractions, dining, and transportation.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-medal"></i>
+                    </div>
+                    <h3 class="feature-title">Superhost Experience</h3>
+                    <p class="feature-text">With ratings above 4.85 for both properties, we pride ourselves on attention to detail and responsive hosting.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Contact Section -->
+    <section class="contact section" id="contact">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Contact Us</h2>
+                <p class="section-subtitle">For special requests or inquiries about extended stays, please reach out to us.</p>
+            </div>
+            
+            <div class="contact-card">
+                <h3 class="contact-title">Get In Touch</h3>
+                <p class="contact-text">We're here to answer any questions you might have about our properties.</p>
+                
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="contact-label">Email</div>
+                        <div class="contact-value">info@smarthomenexus.net</div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-globe"></i>
+                        </div>
+                        <div class="contact-label">Website</div>
+                        <div class="contact-value">smarthomenexus.net</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p class="footer-text">Smart Home Nexus - Redefining modern hospitality in Kolkata</p>
+        </div>
+    </footer>
+    
+    <script>
+        // Navbar scroll effect
+        const navbar = document.getElementById('navbar');
+        
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+        
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const navbarLinks = document.getElementById('navbar-links');
+        
+        mobileMenuBtn.addEventListener('click', function() {
+            navbarLinks.classList.toggle('active');
+        });
+        
+        // Smooth scrolling for navbar links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    // Close mobile menu if open
+                    navbarLinks.classList.remove('active');
+                    
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 70,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Animation on scroll
+        const animateOnScroll = function() {
+            const elements = document.querySelectorAll('.feature-card, .section-header, .property-embed-container, .contact-card');
+            
+            elements.forEach(element => {
+                const elementPosition = element.getBoundingClientRect().top;
+                const windowHeight = window.innerHeight;
+                
+                if (elementPosition < windowHeight - 100) {
+                    element.style.opacity = '1';
+                    element.style.transform = 'translateY(0)';
+                }
+            });
+        };
+        
+        // Set initial state for animation
+        document.querySelectorAll('.feature-card, .section-header, .property-embed-container, .contact-card').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'all 0.8s ease';
+        });
+        
+        // Run animation on load and scroll
+        window.addEventListener('load', animateOnScroll);
+        window.addEventListener('scroll', animateOnScroll);
+    </script>
+</body>
+</html>
